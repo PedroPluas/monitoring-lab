@@ -1,0 +1,73 @@
+# ==========================================================
+# Logs
+# ==========================================================
+
+logs/
+**/logs/
+*.log
+*.log.*
+hs_err_pid*
+replay_pid*
+
+
+# ==========================================================
+# Environment variables / secrets
+# ==========================================================
+
+.env
+.env.*
+!.env.*.example
+!.env.example
+monitoring/alertmanager/alertmanager.generated.yml
+
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+
+
+# ==========================================================
+# Docker / local runtime data
+# ==========================================================
+
+docker-data/
+volumes/
+tmp/
+
+# Local mounted data for observability tools
+monitoring/prometheus/data/
+monitoring/grafana/data/
+monitoring/alertmanager/data/
+monitoring/opensearch/data/
+monitoring/opensearch-dashboards/data/
+
+
+# ==========================================================
+# OpenSearch / Elasticsearch local data
+# ==========================================================
+
+opensearch-data/
+elasticsearch-data/
+
+
+# ==========================================================
+# Database local data / dumps
+# ==========================================================
+
+postgres-data/
+db-data/
+*.dump
+*.backup
+*.sql.gz
+
+
+# ==========================================================
+# Temporary files
+# ==========================================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+~$*

@@ -1,0 +1,39 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+rule_files:
+  - /etc/prometheus/rules/*.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+
+scrape_configs:
+  - job_name: 'api-gateway'
+    metrics_path: '/api-gateway/actuator/prometheus'
+    static_configs:
+      - targets: ['api-gateway:8080']
+
+  - job_name: 'auth-service'
+    metrics_path: '/auth-service/actuator/prometheus'
+    static_configs:
+      - targets: ['auth-service:8080']
+
+  - job_name: 'catalog-service'
+    metrics_path: '/catalog-service/actuator/prometheus'
+    static_configs:
+      - targets: ['catalog-service:8080']
+
+  - job_name: 'orders-service'
+    metrics_path: '/orders-service/actuator/prometheus'
+    static_configs:
+      - targets: ['orders-service:8080']
+
+  - job_name: 'client-service'
+    metrics_path: '/client-service/actuator/prometheus'
+    static_configs:
+      - targets: ['client-service:8080']

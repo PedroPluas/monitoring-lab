@@ -1,0 +1,40 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: email-receiver
+  group_by: ['alertname', 'job', 'severity']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 5m
+
+receivers:
+  - name: email-receiver
+    email_configs:
+      - to: '${SMTP_TO_EMAIL}'
+        from: '${SMTP_FROM_EMAIL}'
+        smarthost: '${SMTP_SMARTHOST}'
+        auth_username: '${SMTP_AUTH_USERNAME}'
+        auth_identity: '${SMTP_AUTH_IDENTITY}'
+        auth_password: '${SMTP_AUTH_PASSWORD}'
+        require_tls: true
+        send_resolved: true
+        headers:
+          Subject: '[{{ .Status }}] {{ .CommonLabels.alertname }} - {{ .CommonLabels.job }}'
+        text: |
+          Estado: {{ .Status }}
+
+          {{ range .Alerts }}
+          Alerta: {{ .Labels.alertname }}
+          Servicio: {{ .Labels.job }}
+          Instancia: {{ .Labels.instance }}
+          Severidad: {{ .Labels.severity }}
+
+          Resumen: {{ .Annotations.summary }}
+          Descripción: {{ .Annotations.description }}
+
+          Inicio: {{ .StartsAt }}
+          {{ if .EndsAt }}Fin: {{ .EndsAt }}{{ end }}
+
+          -----------------------------
+          {{ end }}
