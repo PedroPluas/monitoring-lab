@@ -99,7 +99,7 @@ services:
     container_name: obs-alertmanager
     restart: unless-stopped
     volumes:
-      - ./monitoring/alertmanager/alertmanager.prod.yml:/etc/alertmanager/alertmanager.yml:ro
+      - ./monitoring/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
       - obs_alertmanager_data:/alertmanager
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
