@@ -27,7 +27,7 @@ jobs:
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
-    needs: build-and-push
+    needs: validate-compose
 
     steps:
       - name: checkout code
@@ -85,7 +85,7 @@ jobs:
             docker image prune -f
 
             docker logout ghcr.io || true
-            
+
             docker compose --env-file .env -f docker-compose.yml ps
           EOF
         
