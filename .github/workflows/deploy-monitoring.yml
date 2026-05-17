@@ -65,8 +65,8 @@ jobs:
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
-          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          # GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          # GHCR_TOKEN_RO: ${{ secrets.GHCR_TOKEN_RO }}
         run: |
           ssh -i ~/.ssh/vps_key "$VPS_USER@$VPS_HOST" << EOF
             set -e
@@ -78,7 +78,7 @@ jobs:
               exit 1
             fi
 
-            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+            # echo "$GHCR_TOKEN_RO" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
 
             docker compose --env-file .env -f docker-compose.yml pull
             docker compose --env-file .env -f docker-compose.yml up -d --remove-orphans
